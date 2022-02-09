@@ -2,6 +2,10 @@
 
 ## Arquitecturas de Software
 
+## Integrantes
+- Juan Felipe Monroy
+- Nicolas Piñeros Campo
+
 # Componentes y conectores - Parte I.
 
 El ejercicio se debe traer terminado para el siguiente laboratorio (Parte II).
