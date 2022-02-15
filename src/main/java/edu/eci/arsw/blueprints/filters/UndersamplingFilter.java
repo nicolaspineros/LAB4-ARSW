@@ -2,11 +2,13 @@ package edu.eci.arsw.blueprints.filters;
 
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //Filtro para suprimir 1 de cada 2 puntos del plano, de manera intercalada.
+@Service("UndersamplingFilter")
 public class UndersamplingFilter implements BlueprintsFilter{
     @Override
     public Blueprint filter(Blueprint bp){

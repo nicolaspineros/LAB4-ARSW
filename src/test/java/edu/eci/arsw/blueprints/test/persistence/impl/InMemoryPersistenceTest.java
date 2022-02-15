@@ -5,13 +5,17 @@
  */
 package edu.eci.arsw.blueprints.test.persistence.impl;
 
+import edu.eci.arsw.blueprints.filters.RedundancyFilter;
+import edu.eci.arsw.blueprints.filters.UndersamplingFilter;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,6 +100,41 @@ public class InMemoryPersistenceTest {
         assertEquals(prueba,resp);
     }
 
+    @Test
+    public void redundancyFilter() {
+        RedundancyFilter filtro = new RedundancyFilter();
+        Point points[] = {new Point(10,10), new Point(10,10), new Point(20,20), new Point(20,20),new Point(30,30), new Point(30,30)};
+        Blueprint bp = new Blueprint("mack","mypsint",points);
+        bp = filtro.filter(bp);
+        List<Point> resp = new ArrayList<>();
+        resp.add(new Point(10,10));
+        resp.add(new Point(20,20));
+        resp.add(new Point(30,30));
+        assertEquals(bp.getPoints().size(), resp.size());
+        List<Point> respBp = bp.getPoints();
+        for (int i = 0; i < resp.size(); i++){
+            /*assertEquals(resp.get(i).getX(),respBp.get(i).getX());
+            assertEquals(resp.get(i).getY(),respBp.get(i).getY());*/
+            assertTrue(resp.get(i).getX() == respBp.get(i).getX() && resp.get(i).getY() == respBp.get(i).getY());
+        }
 
+    }
+
+    @Test
+    public void undersasmplingFilter(){
+        UndersamplingFilter filtro = new UndersamplingFilter();
+        Point points[] = {new Point(10,10), new Point(15,15), new Point(20,20), new Point(25,25),new Point(30,30), new Point(35,35)};
+        Blueprint bp = new Blueprint("mack","mypsint",points);
+        bp = filtro.filter(bp);
+        List<Point> resp = new ArrayList<>();
+        resp.add(new Point(10,10));
+        resp.add(new Point(20,20));
+        resp.add(new Point(30,30));
+        assertEquals(bp.getPoints().size(), resp.size());
+        List<Point> respBp = bp.getPoints();
+        for (int i = 0; i < resp.size(); i++){
+            assertTrue(resp.get(i).getX() == respBp.get(i).getX() && resp.get(i).getY() == respBp.get(i).getY());
+        }
+    }
     
 }

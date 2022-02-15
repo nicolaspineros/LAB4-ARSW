@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 //Filtro para suprimir del plano los puntos consecutivos que sean repetidos.
+
 @Service("RedundancyFilter")
 public class RedundancyFilter implements BlueprintsFilter {
     @Override
@@ -15,14 +16,12 @@ public class RedundancyFilter implements BlueprintsFilter {
         for (Point i : bp.getPoints()){
             boolean redundancy = false;
             for (Point j : points){
-                if (i.equals(j)){
+                if (i.getX() == j.getX() && i.getY() == j.getY()){
                     redundancy=true;
                     break;
                 }
             }
-            if (!redundancy){
-                points.add(i);
-            }
+            if (!redundancy)points.add(i);
         }
         return new Blueprint(bp.getAuthor(), bp.getName(),points);
     }
